@@ -1,0 +1,20 @@
+;------------------------------;
+;    sample paths.conf file    ;
+;------------------------------;
+; NOTE: no tailing slash at the end of the path.
+;
+; key 'type' tells the type of the external prgram.
+; possible values are: native, python, java, mono
+;
+
+[firefox]
+path=/opt/mozilla/firefox
+fname=firefox
+type=native
+
+[jabref]
+path=/opt/java
+fname=JabRef-2.10.jar
+type=java
+
+;--EOF--;
