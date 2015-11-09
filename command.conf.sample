@@ -1,0 +1,57 @@
+;------------------------------;
+;   sample command.conf file   ;
+;------------------------------;
+
+[command]
+; available types
+; user must list all the sections that they want to use.
+type=native,python,java
+
+[native]
+;---------------;
+; native binary ;
+;---------------;
+; the following key-values are omitted since native binary has
+; their own settings per application.
+use=sys
+path=
+option=
+
+[python]
+;------------;
+; python 2.x ;
+;------------;
+; use=sys|user
+;   sys  -- use system default
+;   user -- use user specified
+use=sys
+; if use=user, the absolute path to the executable must be given.
+path=/usr/bin/python
+; additional parameter
+option=
+
+[python3]
+;------------;
+; python 3.x ;
+;------------;
+use=sys
+path=/usr/bin/python3
+option=
+
+[java]
+;------;
+; java ;
+;------;
+use=sys
+path=/usr/bin/java
+option=
+
+[mono]
+;-----------;
+; Mono/.Net ;
+;-----------;
+use=sys
+path=/usr/bin/mono
+option=
+
+;--EOF--;
