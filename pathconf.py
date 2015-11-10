@@ -17,7 +17,9 @@ Path config module.
 Usage:  import this module and read pathconf.PATHS object.
 
 Changelog:
-    2015-1102-1712.06est on lcpc
+    2015-1102-1712.06est on lcpc, create module
+
+    2015-1109-1836.06est on lcpc, add getUserFilename()
 """
 
 import os
@@ -67,6 +69,20 @@ class PathConf:
         else:
             raise IOError, "[EE] cannot open default config file at %s"%( aPath )
         ##
+        return res
+    def getUserFilename( self, fname="" ):
+        """
+        =2015-1109-1830.22est on lcpc
+        =2015-1109-1832.54est on lcpc
+        """
+        uhome = os.path.expanduser("~")
+        ufname = ".paths.conf"
+        if( isinstance( fname, str ) ):
+            if( len(fname) > 1 ):
+                ufname = fname
+                pass
+            pass
+        res = os.path.join( uhome, ufname )
         return res
     pass
 ##
