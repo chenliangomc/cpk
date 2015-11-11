@@ -46,13 +46,9 @@
 ##
 
 import sys, os
-import conf,pathconf,runtool
+import conf,pathconf
+from runtool import defaultProgramSetting as dap
 
-dap = {
-    # default app launch name
-    "java"   : ( "java", "-jar", ),
-    "python" : ( "python", "", ),
-}
 
 def work():
     for ln in pathconf.PATHS:
