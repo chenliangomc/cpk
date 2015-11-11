@@ -78,6 +78,16 @@ class Caller:
         """
         load actual job settings.
         """
+        if( isinstance( obj, Setter ) ):
+            # validate the settings
+            if( obj.validate() ):
+                pass
+            else:
+                raise ValueError, "job setting validation failed."
+            pass
+        else:
+            raise ValueError, "obj must be an instance of Setter class."
+        ##
         pass
     def run( self ):
         """
@@ -95,7 +105,7 @@ class Caller:
             res = os.system( cmdline )
             pass
         except:
-            print ""
+            print "Error raises when running external program."
             pass
         ##
         return res
@@ -136,12 +146,7 @@ class Dispatcher:
         """
         res = None
         ##
-        ar = Caller()
-        ar.set( obj )
-        # validate the settings
-        if( ar.validate() ):
-            res = ar
-            pass
+        res = Caller( obj )
         ##
         return re
     pass
