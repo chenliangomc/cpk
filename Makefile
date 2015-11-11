@@ -5,8 +5,9 @@
 all:	run
 
 doc:
-	pydoc -w conf
-	pydoc -w pathconf
+#	pydoc -w conf
+#	pydoc -w pathconf
+	epydoc -v  conf pathconf
 
 run:
 	./demoapp.py

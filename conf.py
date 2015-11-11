@@ -13,11 +13,12 @@
 conf.py -- config/job file parser
 
 Changelog:
-    conf.py ; started at 2014-09-24 16:48:23 EDT by Liang Chen
 
-    2015-10-26 12:13:57 EDT bugfix by Liang Chen, allow uppercased key name and rename section name list key with underscores.
+conf.py ; started at 2014-09-24 16:48:23 EDT by Liang Chen
 
-    2015-10-26 13:02:52 EDT minor changes.
+2015-10-26 12:13:57 EDT bugfix by Liang Chen, allow uppercased key name and rename section name list key with underscores.
+
+2015-10-26 13:02:52 EDT minor changes.
 """
 
 class Conf(object):

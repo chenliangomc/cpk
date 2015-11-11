@@ -17,13 +17,14 @@ Path config module.
 Usage:  import this module and read pathconf.PATHS object.
 
 Changelog:
-    2015-1102-1712.06est on lcpc, create module
 
-    2015-1109-1836.06est on lcpc, add getUserFilename()
+2015-1102-1712.06est on lcpc, create module
 
-    2015-1110-1857.18est on lcpc, add optional param for readPaths()
+2015-1109-1836.06est on lcpc, add getUserFilename()
 
-    2015-1110-1901.34est on lcpc, depreciate a private method
+2015-1110-1857.18est on lcpc, add optional param for readPaths()
+
+2015-1110-1901.34est on lcpc, depreciate a private method
 """
 
 import os
@@ -43,16 +44,13 @@ class PathConf:
         mod_path = os.path.dirname( mod_file_path )
         return mod_path
 
-    def __getDefaultConf__( self ):
-        default_conf = os.path.join(
-            self.__getModPath__(),
-            self.getDefaultFilename()
-            )
-        return default_conf
-
     def getDefaultBasename( self ):
         """
         return the default config filename.
+
+        Changelog:
+
+        2015-1110-1901.34est on lcpc, add this function.
         """
         res = "paths.conf"
         return res
@@ -60,7 +58,10 @@ class PathConf:
     def getDefaultFilename( self ):
         """
         return the path of default config file.
-        =2015-1110-1858.49est on lcpc
+        
+        Changelog:
+
+        2015-1110-1858.49est on lcpc, return the full path.
         """
         res = os.path.join(
             self.__getModPath__(),
@@ -70,11 +71,13 @@ class PathConf:
 
     def readPaths( self, path="" ):
         """
-        read the default config file and return a Conf object.
+        read the config file specified by 'path' and return a Conf object.
 
         return None if error occurs.
 
-        =2015-1110-1853.52est on lcpc, add path support.
+        Changelog:
+
+        2015-1110-1853.52est on lcpc, add path support.
         """
         res = None
         ##
@@ -93,13 +96,18 @@ class PathConf:
             raise IOError, "[EE] cannot open default config file at %s"%( aPath )
         ##
         return res
+
     def getUserFilename( self, fname="", path="" ):
         """
-        =2015-1109-1830.22est on lcpc
-        write initial version
-        =2015-1109-1832.54est on lcpc
+        build a path string to user config file.
 
-        =2015-1110-1848.40est on lcpc, add userpath support
+        if 'path' is omitted or empty string, the current working dir is used as the path.
+
+        Changelog:
+
+        write initial version between 2015-1109-1830.22est and 2015-1109-1832.54est on lcpc
+
+        2015-1110-1848.40est on lcpc, add userpath support
         """
         uwdir = os.getcwd()
         uhome = os.path.expanduser("~")
