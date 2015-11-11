@@ -102,19 +102,35 @@ def work():
     cmd_string = " ".join( cmdln )
     print "'%s'"%( cmd_string )
 
+    """
     try:
         res =  os.system( cmd_string )
         pass
     except:
         print "Error raises when running external program."
         pass
+        """
     ##
     return res
+
+def dowork():
+    pc = pathconf.PathConf()
+    userapp = pc.readPaths( pc.getUserFilename("command.conf") )
+
+    P = runtool.Dispatcher()
+    ds = runtool.DefaultSetting( userapp )
+    ac = P.new( ds )
+    ss = runtool.Setter( pathconf.PATHS )
+    ss.set( { "appname":"jacat", "param":"/tmp" } )
+    ac.load( ss )
+    ac.run()
+    ##
+    pass
 
 def main( args ):
     res = 0
     ##
-    res = work()
+    res = dowork()
     ##
     return res
 ##

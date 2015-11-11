@@ -25,6 +25,8 @@ Changelog:
 2015-1110-1857.18est on lcpc, add optional param for readPaths()
 
 2015-1110-1901.34est on lcpc, depreciate a private method
+
+2015-1111-1227.13est on dhn, bugfix in docstring
 """
 
 import os
@@ -71,7 +73,7 @@ class PathConf:
 
     def readPaths( self, path="" ):
         """
-        read the config file specified by 'path' and return a Conf object.
+        read the config file specified by 'path' and return the contents read by Conf object.
 
         return None if error occurs.
 
