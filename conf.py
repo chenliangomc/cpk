@@ -12,11 +12,12 @@
 """
 Config file parser
 
-Author: Liang Chen (C) Copyright 2014, 2015
+@author: Liang Chen
+@copyright: 2014, 2015
 
-Changelog:
+@since: 2014-09-24 16:48:23 EDT
 
-conf.py ; started at 2014-09-24 16:48:23 EDT by Liang Chen
+@change:
 
 2015-10-26 12:13:57 EDT bugfix by Liang Chen, allow uppercased key name and rename section name list key with underscores.
 
@@ -27,14 +28,18 @@ class Conf(object):
     """
     config file reader
     """
+
     def __init__(self):
         self._conf = dict()
         pass
+
     def read(self, fname):
         """
-        read the file specified in fname, and return the sections and options in a dictionary.
+        read the contents of the file specified in I{fname}
 
-        IOError will be raised when the operation fails.
+        @return: a dictionary object contains the sections and options.
+
+        @raise IOError: when the operation fails.
         """
         self._conf.clear()
         ##
@@ -69,9 +74,10 @@ class Conf(object):
         self._conf['_sections_'] = sections[:]
         ##
         return self._conf
+
     def sections(self):
         """
-        return the list of all section names.
+        @return: the list of all section names.
         """
         res = list()
         ##

@@ -12,21 +12,25 @@
 """
 Run external program
 
-Author: Liang Chen (C) Copyright 2008--2015
+@author: Liang Chen
+@copyright: 2014, 2015
 
-Changelog:
-
-2015-1109-1202.52est on lcpc, module created by Liang
+@since: 2015-1109-1202.52est on lcpc
 """
 
 import os
 import conf
-##
+
+
 class DefaultSetting:
     """
     default program launch setting
     """
+
     def __init__( self, obj ):
+        """
+        @raise ValueError: if I{obj} is not a dictionary object.
+        """
         if( isinstance( obj, dict ) ):
             self.__user_app = obj
             pass
@@ -36,9 +40,11 @@ class DefaultSetting:
 
     def get( self, apptype ):
         """
-        return the default setting for the given apptype.
+        @return:
 
-        return None if error occurs.
+        the default setting for the given apptype.
+
+        None if error occurs.
         """
         res = None
         ##
@@ -63,6 +69,9 @@ class DefaultSetting:
         return res
 
     def getUser( self ):
+        """
+        @return: user overrided program settings
+        """
         res = self.__user_app
         return res
 ##
@@ -70,10 +79,11 @@ class Caller:
     """
     external program caller.
     """
+
     def __init__( self, obj ):
         self.__flags__ = {
             "debug": True,
-            "dryrun": False,#True,
+            "dryrun": False,
             }
         #
         self.__dset = obj
@@ -91,6 +101,9 @@ class Caller:
     def load( self, obj ):
         """
         load actual job settings.
+
+        @raise RuntimeError: if setting has been loaded.
+        @raise ValueError: if setting validation fails.
         """
         if( self.__ready ):
             raise RuntimeError, "job already loaded."
@@ -115,6 +128,8 @@ class Caller:
     def run( self ):
         """
         run the job.
+
+        @return: the exit value of the called external program.
         """
         res = 0
         ##
@@ -148,6 +163,7 @@ class Setter:
     """
     external program parameter helper class
     """
+
     def __init__( self, obj ):
         self.__basic = obj
         self.__dset = None
@@ -157,34 +173,44 @@ class Setter:
     def set( self, job ):
         """
         set the parameters of the actual job.
+
+        @raise ValueError: if I{job} is not a dictionary object.
         """
         if( isinstance( job, dict ) ):
             self.__job = job
             pass
         else:
-            raise ValueError, "obj must be a dictionary."
+            raise ValueError, "job must be a dictionary."
         pass
 
-    def getType( self ):
+    def __getType__( self ):
         res = ""
         try:
             res = self.__basic[ self.__job["appname"] ]["type"]
             pass
         except:
+            #res = "native"
             pass
         ##
+        return res
+    def essentialKey( self ):
+        """
+        @return: the essential key names that the job dictionary must have.
+        """
+        res = ( "appname", "param", )
         return res
 
     def getCmd( self ):
         """
         generate the complete command line string
 
-        2015-1111-1310.29est on dhn
+        @return: a list of command line tokens
+        @since: 2015-1111-1310.29est on dhn
         """
         res = list()
         ##
         appname = self.__job["appname"]
-        apptype = self.getType()
+        apptype = self.__getType__()
 
         appcfg = self.__dset.get( apptype )
 
@@ -220,6 +246,14 @@ class Setter:
     def validate( self, dset=None ):
         """
         validate the settings of the job.
+
+        @return:
+
+        True if the setting is valid.
+
+        False otherwise.
+
+        @raise ValueError: if errors were found in the setting.
         """
         res = False
         ##
@@ -232,7 +266,7 @@ class Setter:
             self.__dset = dset
 
             # essential element check
-            essential = [ "appname", "param", ]
+            essential = self.essentialKey()
             for item in essential:
                 if( self.__job.has_key(item) ):
                     res = True
@@ -247,9 +281,16 @@ class Setter:
                 # get user override
                 userapp = self.__dset.getUser()
                 avail_types = set( userapp["command"]["type"].split(",") )
-                atype = self.getType()
-                #
+                atype = self.__getType__()
+                # check type mask
                 if( atype in avail_types ):
+                    override_label = userapp[ atype ]["use"]
+                    # check override label
+                    if( override_label in ( "sys","user" ) ):
+                        pass
+                    else:
+                        res = False
+                        raise ValueError, "'use' key should be either 'sys' or 'user'."
                     pass
                 else:
                     res = False
@@ -265,11 +306,13 @@ class Dispatcher:
     """
     Caller provider class.
     """
+
     def __init__( self ):
         pass
+
     def new( self, obj ):
         """
-        return a Caller object.
+        @return: a Caller object.
         """
         res = Caller( obj )
         ##

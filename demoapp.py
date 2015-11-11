@@ -49,70 +49,6 @@ import sys, os
 import conf, pathconf, runtool
 
 
-def work():
-    for ln in pathconf.PATHS:
-        #print "%s=%s"%( ln, pathconf.PATHS[ ln ] )
-        pass
-    ##
-    pc = pathconf.PathConf()
-    print "default path:", pc.getDefaultFilename()
-    up = pc.getUserFilename("command.conf")
-    print "user path:", up
-    uc = pc.readPaths( up )
-    #print uc
-
-    # build cmdln string list
-    cmdln = list()
-    dc = pathconf.PATHS
-    app = "jabref"
-    apptype = dc[ app ]["type"]
-    app_launch_cfg = uc[ apptype ]
-    #print app_launch_cfg
-
-    ds = runtool.DefaultSetting()
-    dap = ds.get( apptype )
-
-    if( apptype == "native" ):
-        # skip the interpretor/runtime selecting
-        pass
-    else:
-        if( app_launch_cfg["use"] == "sys" ):
-            cmdln.append(  dap[0]  )
-            pass
-        elif( app_launch_cfg["use"] == "user" ):
-            cmdln.append( app_launch_cfg["path"] )
-            pass
-        else:
-            raise ValueError, "'use' key should be either 'sys' or 'user'."
-        pass
-
-    # additional option
-    cmdln.append( app_launch_cfg["option"] )
-
-    # app image file
-    appfile = os.path.join( dc[ app ]["path"], dc[ app ]["fname"] )
-    appfileparam = dap[1]
-    cmdln.append( appfileparam )
-    cmdln.append( appfile )
-
-    # eliminate empty string
-    #print cmdln
-    cmdln = [ item for item in cmdln if( len(item) > 0 ) ]
-
-    cmd_string = " ".join( cmdln )
-    print "'%s'"%( cmd_string )
-
-    """
-    try:
-        res =  os.system( cmd_string )
-        pass
-    except:
-        print "Error raises when running external program."
-        pass
-        """
-    ##
-    return res
-
 def dowork():
     pc = pathconf.PathConf()
     userapp = pc.readPaths( pc.getUserFilename("command.conf") )
@@ -120,10 +56,21 @@ def dowork():
     P = runtool.Dispatcher()
     ds = runtool.DefaultSetting( userapp )
     ac = P.new( ds )
-    ss = runtool.Setter( pathconf.PATHS )
+    ss = runtool.Setter( pc.readPaths() )
     ss.set( { "appname":"jacat", "param":"/tmp" } )
     ac.load( ss )
     ac.run()
+
+    try:
+        ad = P.new( ds )
+        st = runtool.Setter( pathconf.PATHS )
+        st.set( { "appname":"ls", "param":" -la /" } )
+        ad.load( st )
+        ad.run()
+        pass
+    except:
+        print "[II] arbitrary command execution is banned."
+        pass
     ##
     pass
 

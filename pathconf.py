@@ -12,11 +12,10 @@
 """
 Path config module.
 
-Author: Liang Chen (C) Copyright 2014, 2015
+@author: Liang Chen
+@copyright: 2014, 2015
 
-Usage:  import this module and read pathconf.PATHS object.
-
-Changelog:
+@change:
 
 2015-1102-1712.06est on lcpc, create module
 
@@ -27,6 +26,8 @@ Changelog:
 2015-1110-1901.34est on lcpc, depreciate a private method
 
 2015-1111-1227.13est on dhn, bugfix in docstring
+
+@deprecated: read pathconf.PATHS after importing this module, since PathConf class has getDefaultFilename() which .
 """
 
 import os
@@ -35,9 +36,8 @@ import conf
 class PathConf:
     """
     Path Config reader.
-
-    This class may raise IOError exception.
     """
+
     def __init__( self ):
         pass
 
@@ -48,9 +48,11 @@ class PathConf:
 
     def getDefaultBasename( self ):
         """
-        return the default config filename.
+        @return:
 
-        Changelog:
+        the default config filename.
+
+        @change:
 
         2015-1110-1901.34est on lcpc, add this function.
         """
@@ -59,9 +61,9 @@ class PathConf:
 
     def getDefaultFilename( self ):
         """
-        return the path of default config file.
+        @return: the full path of default config file.
         
-        Changelog:
+        @change:
 
         2015-1110-1858.49est on lcpc, return the full path.
         """
@@ -73,17 +75,25 @@ class PathConf:
 
     def readPaths( self, path="" ):
         """
-        read the config file specified by 'path' and return the contents read by Conf object.
+        read the config file specified by B{path}
 
-        return None if error occurs.
+        @param path: The path string of the config file. If omitted, I{getDefaultFilename()} will be called internally.
 
-        Changelog:
+        @return:
+
+        the contents read by Conf object.
+
+        None if error occurs.
+
+        @raise IOError: when the given file does not exsit.
+
+        @change:
 
         2015-1110-1853.52est on lcpc, add path support.
         """
         res = None
         ##
-        aPath = self.getDefaultFilename() #self.__getDefaultConf__()
+        aPath = self.getDefaultFilename()
         if( isinstance( path, str ) ):
             if( len(path) > 1 ):
                 aPath = path
@@ -101,13 +111,20 @@ class PathConf:
 
     def getUserFilename( self, fname="", path="" ):
         """
-        build a path string to user config file.
+        build the path string of user config file.
 
-        if 'path' is omitted or empty string, the current working dir is used as the path.
+        @param fname: the name of the config file.
+        @param path: the path to the config file. If omitted, the current working dir is used as the path.
 
-        Changelog:
+        @return:
 
-        write initial version between 2015-1109-1830.22est and 2015-1109-1832.54est on lcpc
+        a string object contains user config file's full path
+
+        default value is C{'~/.paths.conf'}
+
+        @since: between 2015-1109-1830.22est and 2015-1109-1832.54est on lcpc
+
+        @change:
 
         2015-1110-1848.40est on lcpc, add userpath support
         """
