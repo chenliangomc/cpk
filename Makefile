@@ -7,7 +7,7 @@ all:	run
 doc:
 #	pydoc -w conf
 #	pydoc -w pathconf
-	epydoc -v  conf pathconf runtool
+	epydoc -v --url "https://github.com/chenliangomc/cpk" --name "common Python toolkit"  conf pathconf runtool
 
 run:
 	./demoapp.py

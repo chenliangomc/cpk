@@ -15,9 +15,9 @@ Path config module.
 @author: Liang Chen
 @copyright: 2014, 2015
 
-@change:
+@since: 2015-1102-1712.06est on lcpc
 
-2015-1102-1712.06est on lcpc, create module
+@change:
 
 2015-1109-1836.06est on lcpc, add getUserFilename()
 
@@ -27,7 +27,7 @@ Path config module.
 
 2015-1111-1227.13est on dhn, bugfix in docstring
 
-@deprecated: read pathconf.PATHS after importing this module, since PathConf class has getDefaultFilename() which .
+@deprecated: PATHS
 """
 
 import os
@@ -52,9 +52,7 @@ class PathConf:
 
         the default config filename.
 
-        @change:
-
-        2015-1110-1901.34est on lcpc, add this function.
+        @since: 2015-1110-1901.34est on lcpc
         """
         res = "paths.conf"
         return res
