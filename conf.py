@@ -10,7 +10,9 @@
 ##
 
 """
-conf.py -- config/job file parser
+Config file parser
+
+Author: Liang Chen (C) Copyright 2014, 2015
 
 Changelog:
 

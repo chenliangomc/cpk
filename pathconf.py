@@ -10,9 +10,9 @@
 ##
 
 """
-Liang Chen (C) Copyright 2014, 2015
-
 Path config module.
+
+Author: Liang Chen (C) Copyright 2014, 2015
 
 Usage:  import this module and read pathconf.PATHS object.
 
