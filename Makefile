@@ -7,7 +7,7 @@ all:	run
 doc:
 #	pydoc -w conf
 #	pydoc -w pathconf
-	epydoc -v  conf pathconf
+	epydoc -v  conf pathconf runtool
 
 run:
 	./demoapp.py
