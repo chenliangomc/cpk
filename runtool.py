@@ -22,12 +22,38 @@ Changelog:
 import os
 import conf
 ##
-defaultProgramSetting = {
-    # default program launch setting
-    # "app_type" : ( "program", "--app-file" )
-    "java"   : ( "java", "-jar", ),
-    "python" : ( "python", "", ),
-}
+class DefaultSetting:
+    """
+    default program launch setting
+    """
+    def __init__( self ):
+        pass
+    def get( self, appname ):
+        """
+        return the default setting for the given app.
+
+        return None if error occurs.
+        """
+        res = None
+        ##
+        dSet = {
+            # "app_type" : ( "program", "--app-file" )
+            "java"   : ( "java", "-jar", ),
+            "python" : ( "python", "", ),
+            }
+        ##
+        if( isinstance( appname, str ) ):
+            try:
+                res = dSet[ appname ]
+                pass
+            except KeyError:
+                raise ValueError, "incorrect appname."
+                pass
+            pass
+        else:
+            raise ValueError, "appname must be a string."
+        ##
+        return res
 ##
 class Caller:
     """

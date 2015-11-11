@@ -46,8 +46,7 @@
 ##
 
 import sys, os
-import conf,pathconf
-from runtool import defaultProgramSetting as dap
+import conf, pathconf, runtool
 
 
 def work():
@@ -70,12 +69,15 @@ def work():
     app_launch_cfg = uc[ apptype ]
     #print app_launch_cfg
 
+    ds = runtool.DefaultSetting()
+    dap = ds.get( apptype )
+
     if( apptype == "native" ):
         # skip the interpretor/runtime selecting
         pass
     else:
         if( app_launch_cfg["use"] == "sys" ):
-            cmdln.append(  dap[ apptype ][0]  )
+            cmdln.append(  dap[0]  )
             pass
         elif( app_launch_cfg["use"] == "user" ):
             cmdln.append( app_launch_cfg["path"] )
@@ -89,7 +91,7 @@ def work():
 
     # app image file
     appfile = os.path.join( dc[ app ]["path"], dc[ app ]["fname"] )
-    appfileparam = dap[ apptype ][1]
+    appfileparam = dap[1]
     cmdln.append( appfileparam )
     cmdln.append( appfile )
 
