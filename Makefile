@@ -2,12 +2,12 @@
 #=2015-1110-1843.28est on lcpc
 #
 
+DOPT = -v --url "https://github.com/chenliangomc/cpk" --name "common Python toolkit"  --output "apidoc"
+
 all:	run
 
 doc:
-#	pydoc -w conf
-#	pydoc -w pathconf
-	epydoc -v --url "https://github.com/chenliangomc/cpk" --name "common Python toolkit"  conf pathconf runtool
+	epydoc $(DOPT)  conf pathconf runtool
 
 run:
 	./demoapp.py
