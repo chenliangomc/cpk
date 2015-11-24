@@ -51,7 +51,7 @@ import conf, pathconf, runtool
 
 def dowork():
     pc = pathconf.PathConf()
-    userapp = pc.readPaths( pc.getUserFilename("command.conf") )
+    userapp = pc.readPaths( pc.getUserFilename("command.conf", "") )
 
     P = runtool.Dispatcher()
     ds = runtool.DefaultSetting( userapp )

@@ -27,7 +27,8 @@ Path config module.
 
 2015-1111-1227.13est on dhn, bugfix in docstring
 
-@deprecated: PATHS
+2015-1123-0419.53est on dhn, minor change and clean up.
+
 """
 
 import os
@@ -71,7 +72,7 @@ class PathConf:
             )
         return res
 
-    def readPaths( self, path="" ):
+    def readPaths( self, path=None ):
         """
         read the config file specified by B{path}
 
@@ -88,6 +89,8 @@ class PathConf:
         @change:
 
         2015-1110-1853.52est on lcpc, add path support.
+
+        2015-1123-0419.14est on dhn, minor change.
         """
         res = None
         ##
@@ -107,12 +110,12 @@ class PathConf:
         ##
         return res
 
-    def getUserFilename( self, fname="", path="" ):
+    def getUserFilename( self, fname=None, path=None ):
         """
         build the path string of user config file.
 
         @param fname: the name of the config file.
-        @param path: the path to the config file. If omitted, the current working dir is used as the path.
+        @param path: the path to the config file. If empty string is provided, the current working dir is used as the path. If omitted, the user's home dir is used.
 
         @return:
 
@@ -125,6 +128,8 @@ class PathConf:
         @change:
 
         2015-1110-1848.40est on lcpc, add userpath support
+
+        2015-1123-0419.32est on dhn, minor change
         """
         uwdir = os.getcwd()
         uhome = os.path.expanduser("~")
@@ -142,21 +147,10 @@ class PathConf:
                 udir = path
                 pass
             pass
+        else:
+            udir = uhome
         ##
         res = os.path.join( udir, ufname )
         return res
-    pass
-##
-PATHS = None
-
-if( __name__ == "__main__" ):
-    pass
-else:
-    if( PATHS is None ):
-        __pc__ = PathConf()
-        PATHS = __pc__.readPaths()
-        pass
-    else:
-        pass
     pass
 #--eof--#

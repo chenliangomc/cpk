@@ -4,7 +4,7 @@
 
 DOPT = -v --url "https://github.com/chenliangomc/cpk" --name "common Python toolkit"  --output "apidoc"
 
-all:	run
+#all:	run
 
 doc:
 	epydoc $(DOPT)  conf pathconf runtool
